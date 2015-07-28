@@ -20,6 +20,13 @@ rankhospital <- function(state, outcome, num) {
     if (!state %in% names(states)) { 
         stop("invalid state")
     }
+    
+    
+    ## Return hospital name in that state with num lowest 30-day death rate
+    slice <- subset(outcomeData, State==state) # slice data by state
+    slice <- slice[order(slice[,index], na.last=TRUE),2] # sort by hospital name
+    slice <- na.omit(slice)
+    
     if(num == "best"){  # do some input cleaning for num
         num <- 1
     }
@@ -30,10 +37,6 @@ rankhospital <- function(state, outcome, num) {
         stop("invalid num")
     }
     
-    ## Return hospital name in that state with num lowest 30-day death rate
-    slice <- subset(outcomeData, State==state) # slice data by state
-    slice <- slice[order(slice[,index], na.last=TRUE),2] # sort by hospital name
-    slice <- na.omit(slice)
     numHospital <- slice[num]
     numHospital
 }
