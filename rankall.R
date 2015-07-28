@@ -1,8 +1,10 @@
-rankall <- function(state, outcome, num) {
+rankall <- function(outcome, num="best") {
     # Check for invalid outcome input type
     if (!outcome %in% c("heart attack", "heart failure", "pneumonia")) {
         stop("invalid outcome")
     }
+    
+    outcome.names <- c("heart attack", "heart failure", "pneumonia")
     
     # Get index for our given outcome string.
     index <- ifelse(outcome == "heart attack", 11, ifelse(outcome == "heart failure", 17, 23))
@@ -28,7 +30,7 @@ rankall <- function(state, outcome, num) {
             num <- 1
         }
         else if(num == "worst"){
-            num <- length(slice)
+            num <- length(x)
         }
         else if(!is.numeric(num)){
             stop("invalid num")
